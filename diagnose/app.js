@@ -589,14 +589,14 @@
         }));
       }
       card.append(h('div', { class: 'row', style: 'margin-top:10px' },
-        q.type === 'self' ? null : h('button', { class: 'primary', id: 'btn-submit', onclick: function () { judgeAndGo(item); } }, '提交答案'),
+        q.type === 'self' ? null : h('button', { class: 'primary', id: 'btn-submit', onclick: function () { judgeAndGo(item); } }, '我答好了'),
         q.type === 'choice' ? null : h('button', { id: 'btn-peek', onclick: function () { ui.phase = 'self'; ui.verdict = null; renderQuestion(item); } }, '看参考答案并自评'),
-        h('button', { id: 'btn-skip', onclick: function () { ui.phase = 'skip'; renderQuestion(item); } }, '不会')));
+        h('button', { id: 'btn-skip', onclick: function () { ui.phase = 'skip'; renderQuestion(item); } }, '还没想好')));
     } else if (ui.phase === 'auto') {
       const ok = ui.verdict.verdict === 'correct';
       card.append(
         h('div', { class: 'muted' }, '你的答案：' + (q.type === 'choice' ? answerOfKey(q, ui.answer) : ui.answer)),
-        h('div', { class: 'verdict ' + (ok ? 'ok' : 'no') }, ok ? '自动判定：正确' : '自动判定：不正确'),
+        h('div', { class: 'verdict ' + (ok ? 'ok' : 'no') }, ok ? '答对啦！又发现了一点新本领' : '一起看看，下一步怎么想'),
         feedbackBlock(q),
         h('div', { class: 'row' },
           h('button', { class: 'primary', id: 'btn-next', onclick: function () { commit(ok ? 'correct' : 'wrong'); } }, '下一题'),
@@ -604,7 +604,7 @@
           h('button', { onclick: function () { ui.phase = 'ask'; renderQuestion(item); } }, '重新作答')));
     } else if (ui.phase === 'skip') {
       card.append(
-        h('div', { class: 'muted' }, '你选择了「不会」。看一下答案和解析再继续：'),
+        h('div', { class: 'muted' }, '还没想好也没关系。看看答案和解析，再继续：'),
         feedbackBlock(q),
         h('div', { class: 'row' }, h('button', { class: 'primary', id: 'btn-next', onclick: function () { commit('skip'); } }, '下一题')));
     } else {
@@ -616,7 +616,7 @@
         h('div', { class: 'row' },
           h('button', { class: 'good', id: 'btn-right', onclick: function () { commit('correct'); } }, '对（我做对了）'),
           h('button', { class: 'bad', id: 'btn-wrong', onclick: function () { commit('wrong'); } }, '不对'),
-          h('button', { id: 'btn-skip2', onclick: function () { commit('skip'); } }, '不会')));
+          h('button', { id: 'btn-skip2', onclick: function () { commit('skip'); } }, '还没想好')));
     }
 
     card.append(h('div', { class: 'notice' }, '提示：自动判题只是近似的（数字、分数、多个答案会做规范化后比较），一切以参考答案为准；判错了可以手动更正。'));
